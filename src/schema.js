@@ -1,36 +1,59 @@
-const {
-  buildSchema,
-  graphql,
-  GraphQLSchema,
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLFloat,
-  GraphQLInt,
-  GraphQLList,
-  GraphQLNonNull
-} = require('graphql');
+const { gql } = require('apollo-server');
 
-const { products: shoes } = require('./data');
-
-const schema = buildSchema(`
+const typeDefs = gql`
   type Shoe {
-    id: String!
+    id: ID!
     name: String!
     brand: String!
     sizes: [Float]
     price: Float!
   },
-
-  type Query {
-    shoe: Shoe
-    shoes: [Shoe]
+  input ShoeInput {
+    name: String!
+    brand: String!
+    price: Float!
+    sizes: [Float]
   }
-`);
+  type Query {
+    shoes: [Shoe!]
+    shoe(id: ID!): Shoe
+  }
+  type Mutation {
+    createShoe(shoe: ShoeInput): String
+  }
+`;
 
-const root = {
-  shoe: () => shoes[0],
-  shoes: () => shoes
-};
+module.exports = typeDefs;
+
+// const {
+//   buildSchema,
+//   graphql,
+//   GraphQLSchema,
+//   GraphQLObjectType,
+//   GraphQLString,
+//   GraphQLFloat,
+//   GraphQLInt,
+//   GraphQLList,
+//   GraphQLNonNull
+// } = require('graphql');
+
+// const { products: shoes } = require('./data');
+
+// const schema = buildSchema(`
+//   type Shoe {
+//     id: String!
+//     name: String!
+//     brand: String!
+//     sizes: [Float]
+//     price: Float!
+//   },
+
+//   type Query {
+//     shoe: Shoe
+//     shoes: [Shoe]
+//   }
+// `);
+
 // let shoeType = new GraphQLObjectType({
 //   name: 'Shoe',
 //   fields: () => ({
@@ -76,6 +99,11 @@ const root = {
 //   })
 // });
 
-exports.graphql = graphql;
-exports.root = root;
-exports.schema = schema;
+// const root = {
+//   shoe: () => shoes[0],
+//   shoes: () => shoes
+// };
+
+// exports.graphql = graphql;
+// exports.root = root;
+// exports.schema = schema;
