@@ -1,7 +1,7 @@
-const { products: shoes } = require('./data');
+let { products: shoes } = require('./data');
 
 const createShoe = ({ shoe }) => {
-    const shoeData = [...shoes, { ...shoe, id: Date.now() }];
+    shoes = [...shoes, { ...shoe, id: Date.now() }];
     return Promise.resolve(shoe);
 };
 
