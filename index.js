@@ -1,45 +1,20 @@
-const { prisma } = require('./generated/prisma-client');
+const express = require('express');
+const graphqlHTTP = require('express-graphql');
 
-async function main() {
-    const newShoe = await prisma.createShoe({})
-}
+const { schema, root } = require('./src/schema');
 
+const PORT = process.env.PORT || 4000;
+const server = express();
 
-// const { GraphQLServer } = require('graphql-yoga');
-// const typeDefs = require('./src/schema');
-// const resolvers = require('./src/resolvers');
+server.use('/graphql', graphqlHTTP({
+    schema,
+    rootValue: root,
+    graphiql: true
+}));
 
-// const PORT = process.env.PORT || 3000;
-
-// const server = new GraphQLServer({
-//     typeDefs: './src/schema.graphql',
-//     resolvers
-// });
-
-// server.start({ port: PORT }, () => {
-//     console.log(`======================================`);
-//     console.log(`||     Server is Ready!! 😎👍✔      ||`);
-//     console.log('||      Running on port 3000        ||');
-//     console.log(`======================================`);
-// });
-
-
-//const { ApolloServer } = require('apollo-server');
-
-// const express = require('express');
-// const graphqlHTTP = require('express-graphql');
-
-// const { schema, root } = require('./src/schema');
-
-// const PORT = process.env.PORT || 3000;
-// const server = express();
-
-// server.use('/graphql', graphqlHTTP({
-//     schema: schema,
-//     rootValue: root,
-//     graphiql: true
-// }));
-
-// server.listen(PORT, () => {
-//     console.log(`Listening on http://localhost:${PORT}`);
-// });
+server.listen(PORT, () => {
+    console.log(`======================================`);
+    console.log(`||     Server is Ready!! 😎👍✔      ||`);
+    console.log(`||      Running on port ${PORT}      ||`);
+    console.log(`======================================`);
+});
