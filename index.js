@@ -1,36 +1,17 @@
-//const { ApolloServer } = require('apollo-server');
-const { GraphQLServer } = require('graphql-yoga');
+const { ApolloServer } = require('apollo-server');
 const typeDefs = require('./src/schema');
 const resolvers = require('./src/resolvers');
 
 const PORT = process.env.PORT || 3000;
 
-const server = new GraphQLServer({
-    typeDefs: './src/schema.graphql',
+const server = new ApolloServer({
+    typeDefs,
     resolvers
 });
 
-server.start({ port: PORT }, () => {
+server.listen().then(({ url }) => {
     console.log(`======================================`);
     console.log(`||     Server is Ready!! 😎👍✔      ||`);
-    console.log('||      Running on port 3000        ||');
+    console.log(`||      Running on port ${url}       ||`);
     console.log(`======================================`);
 });
-
-// const express = require('express');
-// const graphqlHTTP = require('express-graphql');
-
-// const { schema, root } = require('./src/schema');
-
-// const PORT = process.env.PORT || 3000;
-// const server = express();
-
-// server.use('/graphql', graphqlHTTP({
-//     schema: schema,
-//     rootValue: root,
-//     graphiql: true
-// }));
-
-// server.listen(PORT, () => {
-//     console.log(`Listening on http://localhost:${PORT}`);
-// });

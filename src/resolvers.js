@@ -7,9 +7,8 @@ const createShoe = ({ shoe }) => {
 
 const getShoes = () => Promise.resolve(shoes);
 
-const getShoeById = (shoeId) => {
-    return Promise.resolve(shoes.find(({ id }) => id == shoeId));
-};
+const getShoeById = (shoeId) =>
+    Promise.resolve(shoes.find(({ id }) => id == shoeId));
 
 module.exports = {
     Mutation: {
