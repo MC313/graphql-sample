@@ -1,0 +1,16 @@
+type User {
+  id: ID! @unique
+  username: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+}
+
+type Shoe {
+    id: ID! @unique
+    name: String!
+    brand: String!
+    sizes: [Float!]!
+    price: Float!
+}
+
